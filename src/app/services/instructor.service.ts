@@ -14,17 +14,14 @@ export class InstructorService {
   constructor(private http: HttpClient) { }
 
   readonly baseURL = 'http://localhost:63757/api/Instructor'
-
-  formData: InstructorCreate = new InstructorCreate();
-  list: InstructorView[];
   
-  getProducts(): Observable<InstructorView[]> {
+  getInstructors(): Observable<InstructorView[]> {
     return this.http.get<InstructorView[]>(this.baseURL)
       .pipe(
         tap(data => console.log(JSON.stringify(data)))
       );
   }
-  getProduct(id: number): Observable<InstructorView> {
+  getInstructor(id: number): Observable<InstructorView> {
     const url = `${this.baseURL}/${id}`;
     return this.http.get<InstructorView>(url)
       .pipe(
@@ -38,9 +35,9 @@ export class InstructorService {
         tap(data => console.log('getInstructor: ' + JSON.stringify(data))),
       );
   }
-  createProduct(): Observable<InstructorCreate> {
+  createInstructor(student: InstructorCreate): Observable<InstructorCreate> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<InstructorCreate>(this.baseURL, this.formData, { headers })
+    return this.http.post<InstructorCreate>(this.baseURL, student, { headers })
       .pipe(
         tap(data => console.log('createInstructor: ' + JSON.stringify(data))),
       );

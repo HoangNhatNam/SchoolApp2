@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-student-list',
@@ -13,11 +14,12 @@ import {
 })
 export class StudentListComponent implements OnInit {
   pageTitle = 'Student List';
+  errorMessage: string;
   students$!: Observable<StudentView[]>;
   private searchTerms = new Subject<string>();
   page: number = 1;
 
-  constructor(private service: StudentService) { }
+  constructor(private service: StudentService, private route: Router) { }
 
   search(keyword: string): void {
     this.searchTerms.next(keyword);
@@ -37,7 +39,15 @@ export class StudentListComponent implements OnInit {
   }
 
   onDelete(id: number){
-
+    if(confirm('Are you sure delete this record?')){
+      this.service.deleteStudent(id).subscribe({
+        next: () => this.students$ = this.searchTerms.pipe(
+          debounceTime(300),
+          distinctUntilChanged(),
+          switchMap((keyword: string) => this.service.getStudentsPaging('lastname',keyword, 1, 10)),
+        ),
+      });
+    }
   }
 
   previous(){

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DepartmentService } from 'src/app/services/department.service';
 import { DepartmentView } from 'src/app/Dto/model/department/DepartmentView.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-department-list',
@@ -19,7 +20,7 @@ export class DepartmentListComponent implements OnInit {
   }
   departments: DepartmentView[] = [];
 
-  constructor(private service: DepartmentService) { }
+  constructor(private service: DepartmentService, private route: Router) { }
 
   ngOnInit(): void {
     this.service.getDepartments().subscribe({
@@ -31,7 +32,15 @@ export class DepartmentListComponent implements OnInit {
   }
 
   onDelete(id: number){
-
+    if(confirm('Are you sure delete this record?')){
+      this.service.deleteDepartment(id).subscribe({
+        next: () => this.service.getDepartments().subscribe({
+          next: departments => {
+            this.departments = departments;
+          }
+        }),
+      });
+    }
   }
 
 }

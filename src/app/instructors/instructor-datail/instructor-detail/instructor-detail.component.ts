@@ -19,7 +19,7 @@ export class InstructorDetailComponent implements OnInit {
   }
 
   getInstructor(id: number): void {
-    this.service.getProduct(id).subscribe({
+    this.service.getInstructor(id).subscribe({
       next: instructor => this.onInstructorRetrieved(instructor)
     });
   }

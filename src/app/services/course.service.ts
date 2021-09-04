@@ -40,14 +40,14 @@ export class CourseService {
       );
   }
 
-//   deleteStudent(id: number): Observable<{}> {
-//     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-//     const url = `${this.baseURL}/${id}`;
-//     return this.http.delete<Student>(url, { headers })
-//       .pipe(
-//         tap(data => console.log('deleteStudent: ' + id)),
-//       );
-//   }
+  deleteCourse(id: number): Observable<{}> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this.baseURL}/${id}`;
+    return this.http.delete<Course>(url, { headers })
+      .pipe(
+        tap(data => console.log('deleteCourse: ' + id)),
+      );
+  }
 
 //   updateProduct(student: Student): Observable<Student> {
 //     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
