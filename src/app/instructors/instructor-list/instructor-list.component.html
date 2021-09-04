@@ -1,0 +1,52 @@
+<div class="card">
+
+    <div class="card-header">
+        {{pageTitle}}
+        <button [routerLink]="['/instructors/add']">Add Instructor</button>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">Filter by:</div>
+            <div class="col-md-4">
+                <input type="text" [(ngModel)]="listFilter" />
+            </div>
+
+        </div>
+
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Last Name</th>
+                        <th>FirstMid Name</th>
+                        <th>Hire Date</th>
+                        <th>Office</th>
+                        <th>Courses</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let instructor of filteredProducts">
+                        <td>
+                            <a>{{instructor.lastName}}</a>
+                        </td>
+                        <td>{{instructor.firstMidName}}</td>
+                        <td>{{instructor.hireDate | date:'dd-MM-yyyy'}}</td>
+                        <td>{{instructor.location}}</td>
+                        <td>
+                            <a *ngFor="let course of instructor.course"> {{course.title}} 
+                            <br>
+                            </a>
+                        </td>
+                        <td>
+                            <button class="btn btn-outline-primary btn-sm" [routerLink]="['/instructors', 'edit', instructor.id]">Edit</button>
+                            <button class="btn btn-outline-primary btn-sm" [routerLink]="['/instructors', instructor.id]">Detail</button>
+                            <button class="btn btn-outline-primary btn-sm" (click)="onDelete(instructor.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="card">
+
+    <div class="card-header">
+        {{pageTitle}}
+        <button [routerLink]="['/students/add']">Add Student</button>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">Filter by:</div>
+            <div class="col-md-4">
+                <input #searchBox (input)="search(searchBox.value)" />
+            </div>
+        </div>
+        <div class="row">
+            <button class="col-md-2" (click)="previous()" [disabled]="page==1">previous</button>
+            <a class="col-md-1">{{page}}</a>
+            <button class="col-md-2" (click)="next()">next</button>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Last Name</th>
+                        <th>FirstMid Name</th>
+                        <th>Enrollment Date</th>
+                        <th>Enrollment Count</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let student of students$ | async">
+                        <td>{{student.lastName}}</td>
+                        <td>{{student.firstMidName}}</td>
+                        <td>{{student.enrollmentDate | date:'dd-MM-yyyy'}}</td>
+                        <td>{{student.enrollmentCount}}</td>
+                        <td>
+                            <button class="btn btn-outline-primary btn-sm" [routerLink]="['/students', student.id, 'edit']">Edit</button>
+                            <button class="btn btn-outline-primary btn-sm" [routerLink]="['/students', student.id]">Detail</button>
+                            <button class="btn btn-outline-primary btn-sm" (click)="onDelete(student.id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

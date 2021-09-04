@@ -1,0 +1,90 @@
+<div class="card">
+    <div class="card-header">
+        {{pageTitle}}
+    </div>
+
+    <div class="card-body" *ngIf="instructor">
+        <form novalidate #productForm="ngForm">
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label">Last Name</label>
+                <div class="col-md-8">
+                    <input class="form-control" placeholder="Last Name" name="lastName" #lastName="ngModel" [(ngModel)]="instructor.lastName" required maxlength="10" minlength="2" [class.invalid]="lastName.invalid && lastName.touched">
+                    <span class="invalid-feedback">
+              <span *ngIf="lastName.errors?.required">
+                Instructor last name is required.
+              </span>
+                    <span *ngIf="lastName.errors?.minlength">
+                Instructor last name must have at least 2 characters.
+              </span>
+                    <span *ngIf="lastName.errors?.maxlength">
+                Instructor last name must be at most 10 characters
+              </span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label">FirstMid Name</label>
+                <div class="col-md-8">
+                    <input class="form-control" placeholder="FirstMid Name" name="firstMidName" #firstMidName="ngModel" [(ngModel)]="instructor.firstMidName" required maxlength="25" minlength="10" [class.invalid]="firstMidName.invalid && firstMidName.touched">
+                    <span class="invalid-feedback">
+                <span *ngIf="firstMidName.errors?.required">
+                  Instructor FirstMid Name is required.
+                </span>
+                    <span *ngIf="firstMidName.errors?.minlength">
+                  Instructor FirstMid Name must have at least 10 characters.
+                </span>
+                    <span *ngIf="firstMidName.errors?.maxlength">
+                  Instructor FirstMid Name must be at most 25 characters
+                </span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label">Hire Date</label>
+                <div class="col-md-8">
+                    <input type="date" class="form-control" name="hireDate" #hireDate="ngModel" [ngModel]="instructor.hireDate | date:'yyyy-MM-dd'" format="yyyy-mm-dd" required>
+                    <span class="invalid-feedback">
+                <span *ngIf="hireDate.errors?.required">
+                    Hire Date is required.
+                </span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label">Location</label>
+                <div class="col-md-8">
+                    <input class="form-control" placeholder="Location" name="location" #location="ngModel" [(ngModel)]="instructor.location" required maxlength="10" minlength="2" [class.invalid]="location.invalid && location.touched">
+                    <span class="invalid-feedback">
+                <span *ngIf="location.errors?.required">
+                    Location is required.
+                </span>
+                    <span *ngIf="location.errors?.minlength">
+                        Location must have at least 2 characters.
+                </span>
+                    <span *ngIf="location.errors?.maxlength">
+                        Location must be at most 10 characters
+                </span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group row mb-2">
+                <div class="col-md-4">
+                    <button class="btn btn-primary mr-3" style="width:80px" type="button" [title]="productForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'" [disabled]="!productForm.valid" (click)="saveInstructor()">
+              Save
+            </button>
+                    <button class="btn btn-outline-secondary mr-3" style="width:80px" type="button" title="Cancel your edits">
+              Cancel
+            </button>
+                    <button class="btn btn-outline-warning" style="width:80px" type="button" title="Delete this Instructor" (click)="deleteInstructor()">
+              Delete
+            </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

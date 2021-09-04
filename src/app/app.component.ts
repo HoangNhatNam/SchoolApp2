@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'SchoolApp2';
+
+  logOut(){
+    console.log('log out');
+  }
 }

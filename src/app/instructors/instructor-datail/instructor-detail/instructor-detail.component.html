@@ -1,0 +1,54 @@
+<div class="card">
+    <div class="card-header">
+        {{pageTitle}}
+    </div>
+    <div class="card-body" *ngIf="instructor">
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-3">Full Name:</div>
+                    <div class="col-md-6">{{instructor.fullName}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Last Name:</div>
+                    <div class="col-md-6">{{instructor.lastName}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">First Mid Name:</div>
+                    <div class="col-md-6">{{instructor.firstMidName}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">HireDate:</div>
+                    <div class="col-md-6">{{instructor.hireDate}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Location:</div>
+                    <div class="col-md-6">{{instructor.location}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Cousre:</div>
+                    <div class="col-md-8">
+                        <div class="row" *ngFor="let course of instructor.course">
+                            <div class="col-md-6">
+                                Title: {{course.title}}
+                            </div>
+                            <div class="col-md-6">
+                                Name: {{course.name}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <button class="btn btn-outline-secondary mr-3" style="width:80px" [routerLink]="['/instructors']">
+                    <i class="fa fa-chevron-left"></i> Back
+                </button>
+                <button class="btn btn-outline-primary" style="width:80px" [routerLink]="['/instructors', 'edit', instructor.id]">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>

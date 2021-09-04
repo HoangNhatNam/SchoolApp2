@@ -1,0 +1,44 @@
+<div class="card">
+
+    <div class="card-header">
+        {{pageTitle}}
+        <button [routerLink]="['/courses/add']">Add Course</button>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">Filter by:</div>
+            <div class="col-md-4">
+                <input type="text" [(ngModel)]="listFilter" />
+            </div>
+
+        </div>
+
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Title</th>
+                        <th>Credits</th>
+                        <th>Department</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let course of courses">
+                        <td>{{course.courseID}}</td>
+                        <td>{{course.title}}</td>
+                        <td>{{course.credits}}</td>
+                        <td>{{course.name}}</td>
+                        <td>
+                            <button class="btn btn-outline-primary btn-sm" [routerLink]="['/courses', course.courseID, 'edit']">Edit</button>
+                            <button class="btn btn-outline-primary btn-sm" [routerLink]="['/courses', course.courseID]">Detail</button>
+                            <button class="btn btn-outline-primary btn-sm" (click)="onDelete(course.courseID)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

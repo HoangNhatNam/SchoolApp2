@@ -1,0 +1,62 @@
+<div class="card">
+    <div class="card-header">
+        {{pageTitle}}
+    </div>
+
+    <form novalidate #courseForm="ngForm">
+
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label">Title</label>
+            <div class="col-md-8">
+                <input class="form-control" placeholder="Title" name="title" #title="ngModel" [(ngModel)]="course.title" required maxlength="20" minlength="5" [class.invalid]="title.invalid && title.touched">
+                <span class="invalid-feedback">
+              <span *ngIf="title.errors?.required">
+                Title is required.
+              </span>
+                <span *ngIf="title.errors?.minlength">
+                Title must have at least 5 characters.
+              </span>
+                <span *ngIf="title.errors?.maxlength">
+                Title must be at most 20 characters
+              </span>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label">Credits</label>
+            <div class="col-md-8">
+                <input type="number" class="form-control" placeholder="Credits" name="credits" #credits="ngModel" [(ngModel)]="course.credits" required [class.invalid]="credits.invalid && credits.touched">
+                <span class="invalid-feedback">
+                <span *ngIf="credits.errors?.required">
+                  Credits is required.
+                </span>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label">Department</label>
+            <div class="col-md-8">
+                <select name="departmentID" [(ngModel)]="course.departmentID" class="form-control" required>
+                    <option disabled value="">Select Department</option>
+                    <option *ngFor="let department of departments" [ngValue]="department.departmentID">
+                        {{department.name}}
+                    </option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group row mb-2">
+            <div class="col-md-4">
+                <button class="btn btn-primary mr-3" style="width:80px" type="button" [title]="courseForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'" [disabled]="!courseForm.valid" (click)="saveCourse()">
+              Save
+            </button>
+                <button class="btn btn-outline-secondary mr-3" style="width:80px" type="button" title="Cancel your add" [routerLink]="['/courses']">
+              Cancel
+            </button>
+            </div>
+        </div>
+    </form>
+</div>

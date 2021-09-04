@@ -1,0 +1,22 @@
+<form novalidate #form="ngForm" (submit)="onSubmit(form)">
+    <input type="hidden" name="id" [value]="service.formData.id">
+    <div class="form-group">
+        <label>Last Name</label>
+        <input class="form-control form-control-lg" placeholder="Last Name" name="LastName" #LastName="ngModel" [(ngModel)]="service.formData.LastName" required maxlength="10" minlength="2" [class.invalid]="LastName.invalid && LastName.touched">
+    </div>
+    <div class="form-group">
+        <label>FirstMid Name</label>
+        <input class="form-control form-control-lg" placeholder="FirstMid Name" name="FirstMidName" #FirstMidName="ngModel" [(ngModel)]="service.formData.FirstMidName" required maxlength="25" minlength="10" [class.invalid]="FirstMidName.invalid && FirstMidName.touched">
+    </div>
+    <div class="form-group">
+        <label>Hire Date</label>
+        <input type="date" class="form-control form-control-lg" placeholder="DD/MM/YY" name="HireDate" #HireDate="ngModel" [(ngModel)]="service.formData.HireDate" required>
+    </div>
+    <div class="form-group">
+        <label>Location</label>
+        <input class="form-control form-control-lg" placeholder="Location" name="Location" #Location="ngModel" [(ngModel)]="service.formData.Location" required maxlength="10" minlength="2" [class.invalid]="Location.invalid && Location.touched">
+    </div>
+    <div class="form-group">
+        <button class="btn btn-info" type="submit" [disabled]="form.invalid">SUBMIT</button>
+    </div>
+</form>
