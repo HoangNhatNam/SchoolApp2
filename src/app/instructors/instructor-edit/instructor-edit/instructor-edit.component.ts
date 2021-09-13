@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { InstructorUpdate } from 'src/app/Dto/model/instructor/InstructorUpdate.model';
-import { InstructorView } from 'src/app/Dto/model/instructor/InstructorView.model';
 import { InstructorService } from 'src/app/services/instructor.service';
+import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-instructor-edit',
@@ -10,12 +11,17 @@ import { InstructorService } from 'src/app/services/instructor.service';
   styleUrls: ['./instructor-edit.component.css']
 })
 export class InstructorEditComponent implements OnInit {
+  @ViewChild(NgForm) instructorForm: NgForm;
   pageTitle = 'Instructor Edit';
-  instructor: InstructorView;
-  constructor(private service: InstructorService, private route: ActivatedRoute) { }
+  errorMessage: string;
+  instructor: InstructorUpdate;
+  constructor(
+    private service: InstructorService, 
+    private router: Router, 
+    private activatedRoute: ActivatedRoute,) { }
   
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
     this.getInstructor(id);
   }
 
@@ -25,7 +31,7 @@ export class InstructorEditComponent implements OnInit {
     });
   }
 
-  onInstructorRetrieved(instructor: InstructorView): void {
+  onInstructorRetrieved(instructor: InstructorUpdate): void {
     this.instructor = instructor;
 
     if (this.instructor) {
@@ -36,7 +42,10 @@ export class InstructorEditComponent implements OnInit {
   }
 
   saveInstructor(){
-
+    this.service.updateInstructor(this.instructor).subscribe({
+      next: () => this.router.navigate(['/instructors']),
+      error: err => this.errorMessage = err
+    });
   }
 
   deleteInstructor(){

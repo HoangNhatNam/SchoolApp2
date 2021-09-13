@@ -1,0 +1,16 @@
+<div class="card-body">
+    <div class="form-group row" *ngFor="let course of student.course">
+        <label class="col-md-2 col-form-label">{{course.title}}</label>
+        <div class="col-md-8">
+            <select name="grade" [(ngModel)]="course.grade" class="form-control" required>
+                <option disabled [ngValue]="">Select Grade</option>
+                <option value="0">None</option>
+                <option value="1">A</option>
+                <option value="2">B</option>
+                <option value="3">C</option>
+                <option value="4">D</option>
+                <option value="5">E</option>
+            </select>
+        </div>
+    </div>
+</div>

@@ -5,4 +5,5 @@ export class CourseView {
     name: string='';
     budget: number=0;
     startDate: Date;
+    departmentID: number=0;
 }

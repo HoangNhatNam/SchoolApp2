@@ -7,15 +7,29 @@ import { InstructorDetailComponent } from './instructor-datail/instructor-detail
 import { InstructorAddComponent } from './instructor-add/instructor-add/instructor-add.component';
 
 import { SharedModule } from '../shared/shared.module';
+import { InstructorResolver } from '../services/instructor-resolver.service';
 
 @NgModule({
   imports: [
     SharedModule,
     RouterModule.forChild([
-        { path: 'instructors', component: InstructorListComponent},
-        { path: 'instructors/add', component: InstructorAddComponent},
-        { path: 'instructors/:id', component: InstructorDetailComponent},
-        { path: 'instructors/edit/:id', component: InstructorEditComponent}
+        { 
+          path: 'instructors', 
+          component: InstructorListComponent
+        },
+        { 
+          path: 'instructors/add', 
+          component: InstructorAddComponent
+        },
+        { 
+          path: 'instructors/:id', 
+          component: InstructorDetailComponent
+        },
+        { 
+          path: 'instructors/edit/:id', 
+          component: InstructorEditComponent
+        },
+          
     ])
   ],
   declarations: [

@@ -1,1 +1,46 @@
-<p>department-detail works!</p>
+<div class="card">
+    <div class="card-header">
+        {{pageTitle}}
+    </div>
+    <div class="card-body" *ngIf="department">
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-3">Name:</div>
+                    <div class="col-md-6">{{department.name}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Budget:</div>
+                    <div class="col-md-6">{{department.budget | currency}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Start Date:</div>
+                    <div class="col-md-6">{{department.startDate | date:'dd-MM-yyyy'}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Course:</div>
+                    <div class="col-md-8">
+                        <div class="row" *ngFor="let course of department.courses">
+                            <div class="col-md-6">
+                                Title: {{course.title}}
+                            </div>
+                            <div class="col-md-6">
+                                Credits: {{course.credits | currency}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <button class="btn btn-outline-secondary mr-3" style="width:80px" [routerLink]="['/departments']">
+                    <i class="fa fa-chevron-left"></i> Back
+                </button>
+                <button class="btn btn-outline-primary" style="width:80px" [routerLink]="['/departments', department.departmentID, 'edit']">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>

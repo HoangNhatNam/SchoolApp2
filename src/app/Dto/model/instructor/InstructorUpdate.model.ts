@@ -1,7 +1,10 @@
+import { CourseInstructorView } from "../course/CourseInstructorView.model";
 export class InstructorUpdate {
     id: number=0;
-    LastName: string='';
-    FirstMidName: string='';
-    HireDate: Date;
-    Location: string ='';
+    fullName: string='';
+    lastName: string='';
+    firstMidName: string='';
+    hireDate: Date;
+    location: string ='';
+    course: CourseInstructorView[] = [];
 }

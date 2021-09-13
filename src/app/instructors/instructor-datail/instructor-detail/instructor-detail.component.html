@@ -20,14 +20,14 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3">HireDate:</div>
-                    <div class="col-md-6">{{instructor.hireDate}}</div>
+                    <div class="col-md-6">{{instructor.hireDate | date:'dd-MM-yyyy'}}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">Location:</div>
                     <div class="col-md-6">{{instructor.location}}</div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">Cousre:</div>
+                    <div class="col-md-3">Course:</div>
                     <div class="col-md-8">
                         <div class="row" *ngFor="let course of instructor.course">
                             <div class="col-md-6">

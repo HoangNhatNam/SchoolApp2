@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentService } from 'src/app/services/student.service';
 import { StudentView } from 'src/app/Dto/model/student/StudentView.model';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, of } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Filter } from 'src/app/Dto/model/filter.model';
 
 @Component({
   selector: 'app-student-list',
@@ -16,37 +18,24 @@ export class StudentListComponent implements OnInit {
   pageTitle = 'Student List';
   errorMessage: string;
   students$!: Observable<StudentView[]>;
-  private searchTerms = new Subject<string>();
   page: number = 1;
-
-  constructor(private service: StudentService, private route: Router) { }
-
-  search(keyword: string): void {
-    this.searchTerms.next(keyword);
-  }
+  
+  sortOrder: string = 'lastname';
+  keyword: string = '';
+  pageIndex: number = 1;
+  pageSize: number = 10;
+  searchTerms = new BehaviorSubject<any>({ "sortOrder": this.sortOrder, "keyword": this.keyword, "pageIndex": this.pageIndex, "pageSize": this.pageSize });
+  
+  constructor(private service: StudentService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.students$ = this.searchTerms.pipe(
-      // wait 300ms after each keystroke before considering the term
-      debounceTime(300),
-
-      // ignore new term if same as previous term
-      distinctUntilChanged(),
-
-      // switch to new search observable each time the term changes
-      switchMap((keyword: string) => this.service.getStudentsPaging('lastname',keyword, 1, 10)),
-    );
+    // this.searchTerms.next(this.route.snapshot.queryParamMap.get('filterBy') || '');
+    this.students$ = this.getMapData(this.searchTerms);
   }
 
   onDelete(id: number){
     if(confirm('Are you sure delete this record?')){
-      this.service.deleteStudent(id).subscribe({
-        next: () => this.students$ = this.searchTerms.pipe(
-          debounceTime(300),
-          distinctUntilChanged(),
-          switchMap((keyword: string) => this.service.getStudentsPaging('lastname',keyword, 1, 10)),
-        ),
-      });
+      this.service.deleteStudent(id).subscribe();
     }
   }
 
@@ -55,7 +44,49 @@ export class StudentListComponent implements OnInit {
   }
 
   next(){
-    this.page++
+    this.page++;
+  }
+
+  onSortOrderChange(sortOrder: string) {
+    this.sortOrder = sortOrder;
+    this.searchTerms.next({ "sortOrder": this.sortOrder, "keyword": this.keyword, "pageIndex": this.pageIndex, "pageSize": this.pageSize });
+  }
+
+  onKeywordChange(keyword: string) {
+    this.keyword = keyword;
+    this.searchTerms.next({ "sortOrder": this.sortOrder, "keyword": this.keyword, "pageIndex": this.pageIndex, "pageSize": this.pageSize });
+  }
+
+  onPageIndexChange(pageIndex: number) {
+    this.pageIndex = pageIndex;
+    this.searchTerms.next({ "sortOrder": this.sortOrder, "keyword": this.keyword, "pageIndex": this.pageIndex, "pageSize": this.pageSize });
+  }
+
+  onPageSizeChange(pageSize: number) {
+    this.pageSize = pageSize;
+    this.searchTerms.next({ "sortOrder": this.sortOrder, "keyword": this.keyword, "pageIndex": this.pageIndex, "pageSize": this.pageSize });
+  }
+
+  getMapData(searchTerms: Observable<Filter>) {
+    return searchTerms.pipe(
+      // wait 300ms after each keystroke before considering the term
+      debounceTime(1000),
+      // ignore new term if same as previous term
+      distinctUntilChanged(),
+      // switch to new search observable each time the term changes
+      switchMap(input => {
+        let sortOrder = input.sortOrder;
+        let keyword = input.keyword;
+        let pageIndex = input.pageIndex;
+        let pageSize = input.pageSize;
+
+        if (sortOrder && pageIndex && pageSize) {
+          return this.service.getStudentsPaging(sortOrder, keyword, pageIndex, pageSize);
+        } else {
+          return of([]);
+        }
+      })
+    );
   }
 
 }

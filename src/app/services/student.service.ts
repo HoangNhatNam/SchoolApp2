@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, throwError  } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Student } from '../Dto/entity/student.model';
+import { StudentUpdate } from '../Dto/model/student/StudentUpdate.model';
 
 @Injectable({
   providedIn: 'root'
@@ -55,10 +56,9 @@ export class StudentService {
       );
   }
 
-  updateProduct(student: Student): Observable<Student> {
+  updateStudent(student: StudentUpdate): Observable<StudentUpdate> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this.baseURL}/${student.id}`;
-    return this.http.put<Student>(url, student, { headers })
+    return this.http.put<StudentUpdate>(this.baseURL, student, { headers })
       .pipe(
         tap(() => console.log('updateStudent: ' + student.id)),
         // Return the product on an update

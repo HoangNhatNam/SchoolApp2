@@ -1,1 +1,41 @@
-<p>course-detail works!</p>
+<div class="card">
+    <div class="card-header">
+        {{pageTitle}}
+    </div>
+    <div class="card-body" *ngIf="course">
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-3">Title:</div>
+                    <div class="col-md-6">{{course.title}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Credits:</div>
+                    <div class="col-md-6">{{course.credits | currency}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Name:</div>
+                    <div class="col-md-6">{{course.name}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Budget:</div>
+                    <div class="col-md-6">{{course.budget | currency}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">Start Date:</div>
+                    <div class="col-md-6">{{course.startDate | date:'dd-MM-yyyy'}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <button class="btn btn-outline-secondary mr-3" style="width:80px" [routerLink]="['/courses']">
+                    <i class="fa fa-chevron-left"></i> Back
+                </button>
+                <button class="btn btn-outline-primary" style="width:80px" [routerLink]="['/courses', course.courseID, 'edit']">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>

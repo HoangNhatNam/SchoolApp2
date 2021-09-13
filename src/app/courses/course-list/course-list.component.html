@@ -29,7 +29,7 @@
                     <tr *ngFor="let course of courses">
                         <td>{{course.courseID}}</td>
                         <td>{{course.title}}</td>
-                        <td>{{course.credits}}</td>
+                        <td>{{course.credits | currency}}</td>
                         <td>{{course.name}}</td>
                         <td>
                             <button class="btn btn-outline-primary btn-sm" [routerLink]="['/courses', course.courseID, 'edit']">Edit</button>

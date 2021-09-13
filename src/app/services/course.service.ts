@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, throwError  } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Course } from '../Dto/entity/course.model';
+import { CourseUpdate } from '../Dto/model/course/CourseUpdate.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,19 +25,19 @@ export class CourseService {
       );
   }
 
-//   getStudent(id: number): Observable<StudentView> {
-//     const url = `${this.baseURL}/${id}`;
-//     return this.http.get<StudentView>(url)
-//       .pipe(
-//         tap(data => console.log('getStudent: ' + JSON.stringify(data))),
-//       );
-//   }
+  getCourse(id: number): Observable<CourseView> {
+    const url = `${this.baseURL}/${id}`;
+    return this.http.get<CourseView>(url)
+      .pipe(
+        tap(data => console.log('getCourse: ' + JSON.stringify(data))),
+      );
+  }
 
   createCourse(course: CourseCreate): Observable<CourseCreate> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<CourseCreate>(this.baseURL, course, { headers })
       .pipe(
-        tap(data => console.log('createStudent: ' + JSON.stringify(data))),
+        tap(data => console.log('createCourse: ' + JSON.stringify(data))),
       );
   }
 
@@ -49,14 +50,13 @@ export class CourseService {
       );
   }
 
-//   updateProduct(student: Student): Observable<Student> {
-//     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-//     const url = `${this.baseURL}/${student.id}`;
-//     return this.http.put<Student>(url, student, { headers })
-//       .pipe(
-//         tap(() => console.log('updateStudent: ' + student.id)),
-//         // Return the product on an update
-//         map(() => student),
-//       );
-//   }
+  updateCourse(course: CourseUpdate): Observable<CourseUpdate> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<CourseUpdate>(this.baseURL, course, { headers })
+      .pipe(
+        tap(() => console.log('updatecourse: ' + course.courseID)),
+        // Return the course on an update
+        map(() => course),
+      );
+  }
 }

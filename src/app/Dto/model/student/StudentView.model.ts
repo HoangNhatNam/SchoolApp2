@@ -9,3 +9,8 @@ export class StudentView {
     enrollmentCount: number=0;
     course: CourseStudentView[] = [];
 }
+
+export class StudentResolved {
+    student: StudentView;
+    error?: any;
+  }

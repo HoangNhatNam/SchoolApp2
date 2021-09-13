@@ -6,6 +6,7 @@ import { Observable, of, throwError  } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Course } from '../Dto/entity/course.model';
 import { Department } from '../Dto/entity/department.model';
+import { DepartmentUpdate } from '../Dto/model/department/DepartmentUpdate.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,13 +24,13 @@ export class DepartmentService {
       );
   }
 
-//   getStudent(id: number): Observable<StudentView> {
-//     const url = `${this.baseURL}/${id}`;
-//     return this.http.get<StudentView>(url)
-//       .pipe(
-//         tap(data => console.log('getStudent: ' + JSON.stringify(data))),
-//       );
-//   }
+  getDepartment(id: number): Observable<DepartmentView> {
+    const url = `${this.baseURL}/${id}`;
+    return this.http.get<DepartmentView>(url)
+      .pipe(
+        tap(data => console.log('getStudent: ' + JSON.stringify(data))),
+      );
+  }
 
   createDepartment(department: DepartmentCreate): Observable<DepartmentCreate> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -48,14 +49,13 @@ export class DepartmentService {
       );
   }
 
-//   updateProduct(student: Student): Observable<Student> {
-//     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-//     const url = `${this.baseURL}/${student.id}`;
-//     return this.http.put<Student>(url, student, { headers })
-//       .pipe(
-//         tap(() => console.log('updateStudent: ' + student.id)),
-//         // Return the product on an update
-//         map(() => student),
-//       );
-//   }
+  updateDepartment(department: DepartmentUpdate): Observable<DepartmentUpdate> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<DepartmentUpdate>(this.baseURL, department, { headers })
+      .pipe(
+        tap(() => console.log('updateDepartment: ' + department.departmentID)),
+        // Return the department on an update
+        map(() => department),
+      );
+  }
 }
